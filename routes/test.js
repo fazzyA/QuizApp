@@ -3,6 +3,7 @@ const test = require("../models/test.model");
 const result = require("../models/result.model");
 const axios = require("axios");
 const verify = require("./verifyToken");
+const questions = require("../models/Questions.js")
 
 router.route("/").post(async (req, res) => {
   const testid = req.body.pin;
@@ -18,14 +19,7 @@ router.route("/").post(async (req, res) => {
   if (check) {
     return res.status(400).send({ message: "Test already taken!" });
   }
-  const questions = await axios.get("https://opentdb.com/api.php", {
-    params: {
-      amount: doc.amount,
-      category: doc.topic,
-    },
-  });
-  questions.data.time = doc.time;
-  if (questions.data.response_code == 0) return res.send(questions.data);
+  if (questions) return res.send(questions);
   else
     return res
       .status(400)
@@ -71,7 +65,8 @@ router.route("/getresults").post(async (req, res) => {
 });
 
 router.route("/addtest").post(async (req, res) => {
-  const pin = (await test.countDocuments({}).exec()) + 1000;
+  //const pin = (await test.countDocuments({}).exec()) + 1000;
+  const pin = 1236;
   const email = req.user.email.toLowerCase();
   const amount = req.body.amount;
   const topic = req.body.topic;
@@ -91,7 +86,7 @@ router.route("/addtest").post(async (req, res) => {
   newtest
     .save()
     .then(() => res.send("test added!"))
-    .catch((err) => res.status(400).json("error : " + err));
+    .catch((err) => res.status(400).json("My error : " + err));
 });
 
 module.exports = router;

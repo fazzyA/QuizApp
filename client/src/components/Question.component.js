@@ -35,7 +35,7 @@ function Question(props) {
     };
     axios
       .post(
-        "/api/test/submittest",
+        "http://localhost:4000/api/test/submittest",
         {
           pin,
           email,

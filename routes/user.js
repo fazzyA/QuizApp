@@ -46,7 +46,7 @@ router.route("/login").post(async (req, res) => {
   } else {
     const token = jwt.sign(
       { id: doc._id, email: doc.email },
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.JWT_SECRET
     );
     res.setHeader("Access-Control-Expose-Headers", "*");
     res.setHeader("auth-token", token);

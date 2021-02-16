@@ -25,7 +25,6 @@ const testSchema = new Schema({
   },
   expiry: {
     type: Date,
-    required: true,
   },
   created: {
     type: Date,
